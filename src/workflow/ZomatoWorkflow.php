@@ -7,6 +7,8 @@ final class ZomatoWorkflow extends ArcanistWorkflow {
   	private $revisionID;
   	private $haveUncommittedChanges = false;
 
+  	const BASE_CONFIGKEY = 'zomato.base';
+
 	public function getWorkflowName() {
 		return 'z';
 	}
@@ -89,7 +91,12 @@ EOTEXT
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
   		$repository_api = $this->getRepositoryAPI();
-  		var_dump($repository_api);
+  		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
+
+  		if (!strlen($base)) {
+  			echo pht("zomato.base key not found in your local configuration please add zomato.base key to your .arcconfig file \n");
+  			exit(1);
+  		}
 
   		if ($this->getArgument('create')) {
 

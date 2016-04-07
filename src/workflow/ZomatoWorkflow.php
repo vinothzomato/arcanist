@@ -165,12 +165,12 @@ EOTEXT
   			$result = $conduit->callMethodSynchronous(
   				'zomato.createrevision',
   				$revision);
+  			var_dump($result);
   			$uri = $result['uri'];
   			echo phutil_console_format(
   				"        **%s** __%s__\n\n",
   				pht('Revision URI:'),
   				$uri);
-  			var_dump($result);
   		}
   		else if($this->getArgument('update')){
   			$message = $this->getArgument('message');

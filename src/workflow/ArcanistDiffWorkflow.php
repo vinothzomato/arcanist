@@ -587,6 +587,9 @@ EOTEXT
           'differential.createrevision',
           $revision);
 
+        var_dump($revision);
+        var_dump($result);
+
         $revised_message = $conduit->callMethodSynchronous(
           'differential.getcommitmessage',
           array(

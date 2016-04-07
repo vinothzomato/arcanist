@@ -42,11 +42,7 @@ EOTEXT
   	}
 
   	public function requiresRepositoryAPI() {
-  		if (!$this->isRawDiffSource()) {
-  			return true;
-  		}
-
-  		return false;
+  		return true;
   	}
 
   	public function getArguments() {
@@ -65,7 +61,7 @@ EOTEXT
   				),
   			);
   	}
-  	
+
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
   		echo 'test';

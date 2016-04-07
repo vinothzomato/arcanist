@@ -453,6 +453,10 @@ EOTEXT
   }
 
   public function run() {
+
+    echo "Not allowed to use this command :p blocked by zomato infra team.... don't be too smart :) :)";
+    die();
+
     $this->console = PhutilConsole::getConsole();
 
     $this->runRepositoryAPISetup();
@@ -586,9 +590,6 @@ EOTEXT
         $result = $conduit->callMethodSynchronous(
           'differential.createrevision',
           $revision);
-
-        var_dump($revision);
-        var_dump($result);
 
         $revised_message = $conduit->callMethodSynchronous(
           'differential.getcommitmessage',

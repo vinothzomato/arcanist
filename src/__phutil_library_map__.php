@@ -527,7 +527,7 @@ phutil_register_library_map(array(
     'ArcanistDiffUtils' => 'Phobject',
     'ArcanistDiffUtilsTestCase' => 'PhutilTestCase',
     'ArcanistDiffWorkflow' => 'ArcanistWorkflow',
-    'ZomatoWorkflow' => 'ZomatoWorkflow',
+    'ZomatoWorkflow' => 'ArcanistWorkflow',
     'ArcanistDifferentialCommitMessage' => 'Phobject',
     'ArcanistDifferentialCommitMessageParserException' => 'Exception',
     'ArcanistDifferentialDependencyGraph' => 'AbstractDirectedGraph',

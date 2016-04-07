@@ -100,10 +100,24 @@ EOTEXT
   		$conduit = $this->getConduit();
   		$branch = $repository->getBranchName();
   		$repo = $repository->getRemoteURI();
-  		var_dump($branch); var_dump($repo);
+  		$repoURL = null;
   		$pattern = "/git@github.com:(.*).git/";
     	preg_match($pattern, $repo, $matches);
-    	var_dump($matches);
+    	if (isset($matches[1])) {
+    		$repoURL = "https://github.com/".$matches[1];
+    	}
+    	else{
+    		$pattern = "https://github.com/(.*).git/";
+    		preg_match($pattern, $repo, $matches);
+    		if (isset($matches[1])) {
+    			$repoURL = "https://github.com/".$matches[1];
+    		}
+    	}
+    	
+    	if (!$repoURL) {
+    		echo pht("Something is wrong. Please contact vinoth.kumar@zomato.com.");
+  			exit(1);
+    	}
 
   		if (!strlen($base)) {
   			echo pht("zomato.base key not found in your local configuration please add zomato.base key to your .arcconfig file \n");

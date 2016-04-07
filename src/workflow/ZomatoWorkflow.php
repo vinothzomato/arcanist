@@ -88,6 +88,8 @@ EOTEXT
 
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
+  		$repository_api = $this->getRepositoryAPI();
+  		var_dump($repository_api);
 
   		if ($this->getArgument('create')) {
 

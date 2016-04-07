@@ -8,6 +8,8 @@ final class ZomatoWorkflow extends ArcanistWorkflow {
   	private $haveUncommittedChanges = false;
 
   	const BASE_CONFIGKEY = 'zomato.base';
+  	const PROJECT_CONFIGKEY = 'project.id';
+  	const REPOSITORY_CONFIGKEY = 'repository.id';
 
 	public function getWorkflowName() {
 		return 'z';
@@ -90,17 +92,39 @@ EOTEXT
 
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
-  		$repository_api = $this->getRepositoryAPI();
+  		$console = $this->console;
+  		$repository = $this->getRepositoryAPI();
   		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
+  		$projectId = $this->getConfigFromAnySource(self::PROJECT_CONFIGKEY);
+  		$repoId = $this->getConfigFromAnySource(self::REPOSITORY_CONFIGKEY);
+  		$conduit = $this->getConduit();
+  		$branch = $repository->getBranchName();
+  		$repo = $repository->getRemoteURI();
+  		var_dump($branch); var_dump($repo);
 
   		if (!strlen($base)) {
   			echo pht("zomato.base key not found in your local configuration please add zomato.base key to your .arcconfig file \n");
   			exit(1);
   		}
 
+  		if (!strlen($projectId)) {
+  			echo pht("project.id key not found in your local configuration please add project.id key to your .arcconfig file \n");
+  			exit(1);
+  		}
+
+  		if (!strlen($repoId)) {
+  			echo pht("repository.id key not found in your local configuration please add repository.id key to your .arcconfig file \n");
+  			exit(1);
+  		}
+
   		if ($this->getArgument('create')) {
-
-
+  			$title = $this->getArgument('title');
+  			if (!strlen($title)) {
+  				echo pht("No title for revision. Please provide --title with --create \n");
+  				exit(1);
+  			}
+  			$summary = $this->getArgument('summary') ? $this->getArgument('summary') : 'No summary';
+  			$plan = $this->getArgument('plan') ? $this->getArgument('plan') : 'No plan';
   		}
   		else if($this->getArgument('update')){
 

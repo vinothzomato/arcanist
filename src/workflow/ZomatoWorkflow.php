@@ -139,9 +139,6 @@ EOTEXT
   		}
 
   		if ($this->getArgument('create')) {
-  			$result = array('test' => 1);
-  			$result['reviewerPHIDs'] = array('1');
-  			var_dump($result); die();
   			$title = $this->getArgument('title');
   			if (!strlen($title)) {
   				echo pht("No title for revision. Please provide --title with --create \n");

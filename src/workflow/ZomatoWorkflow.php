@@ -30,7 +30,7 @@ EOTEXT
   	}
 
   	public function requiresWorkingCopy() {
-  		return !$this->isRawDiffSource();
+  		return true;
   	}
 
   	public function requiresConduit() {

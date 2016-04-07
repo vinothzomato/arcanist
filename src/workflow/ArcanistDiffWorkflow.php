@@ -454,8 +454,8 @@ EOTEXT
 
   public function run() {
 
-    //echo "Not allowed to use this command :p blocked by zomato infra team.... don't be too smart :) :)";
-    //die();
+    echo "Not allowed to use this command :p blocked by zomato infra team.... don't be too smart :) :) \n";
+    die();
 
     $this->console = PhutilConsole::getConsole();
 

@@ -165,7 +165,6 @@ EOTEXT
   			$result = $conduit->callMethodSynchronous(
   				'zomato.createrevision',
   				$revision);
-  			var_dump($result);
   			$uri = $result['uri'];
   			echo phutil_console_format(
   				"        **%s** __%s__\n\n",
@@ -173,8 +172,21 @@ EOTEXT
   				$uri);
   		}
   		else if($this->getArgument('update')){
-  			$message = $this->getArgument('message');
-
+  			$message = $this->getArgument('message') ? $this->getArgument('message') : 'No update message';
+  			$revision = array(
+  				'repo' => $repoURL,
+  				'base' => $base,
+  				'head' => $branch,
+  				'message' => $message,
+  				);
+  			$result = $conduit->callMethodSynchronous(
+  				'zomato.updaterevision',
+  				$revision);
+  			$uri = $result['uri'];
+  			echo phutil_console_format(
+  				"        **%s** __%s__\n\n",
+  				pht('Revision Updated:'),
+  				$uri);
   		}
   		else{
   			echo $this->getCommandHelp();

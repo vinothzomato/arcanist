@@ -69,21 +69,25 @@ EOTEXT
   				),
   			'message' => array(
   				'short' => 'm',
+  				'param' => 'message',
   				'help' => pht(
   					'Message while updating the revision'),
   				),
   			'title' => array(
   				'short' => 't',
+  				'param' => 'message',
   				'help' => pht(
   					'Title for the revision while creating a new revision'),
   				),
   			'summary' => array(
   				'short' => 's',
+  				'param' => 'message',
   				'help' => pht(
   					'Summary for the revision while creating a new revision'),
   				),
   			'plan' => array(
   				'short' => 'p',
+  				'param' => 'message',
   				'help' => pht(
   					'Plan for the revision while creating a new revision'),
   				),

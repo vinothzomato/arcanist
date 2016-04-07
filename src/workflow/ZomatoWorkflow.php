@@ -142,8 +142,29 @@ EOTEXT
   			}
   			$summary = $this->getArgument('summary') ? $this->getArgument('summary') : 'No summary';
   			$plan = $this->getArgument('plan') ? $this->getArgument('plan') : 'No plan';
+
+  			$fields = array(
+  				'title' => $title, 
+  				'summary' => $summary, 
+  				'testPlan' => $plan, 
+  				);
+
+  			$revision = array(
+  				'fields' => $fields, 
+  				'repo' => $repoURL,
+  				'base' => $base,
+  				'head' => $branch,
+  				'repoId' => $repoId,
+  				'projectId' => $projectId,
+  				);
+
+  			$result = $conduit->callMethodSynchronous(
+  				'zomato.createrevision',
+  				$revision);
+  			var_dump($result);
   		}
   		else if($this->getArgument('update')){
+  			$message = $this->getArgument('message');
 
   		}
   		else{

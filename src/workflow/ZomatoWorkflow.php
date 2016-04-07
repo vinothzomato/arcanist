@@ -99,6 +99,7 @@ EOTEXT
   		else{
   			echo $this->getCommandHelp();
   		}
+  		echo "\n";
   	}
 }
 

@@ -48,31 +48,57 @@ EOTEXT
   	public function getArguments() {
   		return array(
   			'create' => array(
+  				'short' => 'c',
+  				'conflicts' => array(
+  					'update'    => pht(
+  						'%s can not be used with %s.',
+  						'--create',
+  						'--update'),
+  					),
   				'help' => pht(
   					'Create a revision.'),
   				),
   			'update' => array(
+  				'short' => 'u',
   				'help' => pht(
   					'Update the revision'),
   				),
-  			'title' => array(
+  			'message' => array(
+  				'short' => 'm',
   				'help' => pht(
-  					'Title for the revision'),
+  					'Message while updating the revision'),
+  				),
+  			'title' => array(
+  				'short' => 't',
+  				'help' => pht(
+  					'Title for the revision while creating a new revision'),
   				),
   			'summary' => array(
+  				'short' => 's',
   				'help' => pht(
-  					'Summary for the revision'),
+  					'Summary for the revision while creating a new revision'),
   				),
   			'plan' => array(
+  				'short' => 'p',
   				'help' => pht(
-  					'Plan for the revision'),
+  					'Plan for the revision while creating a new revision'),
   				),
   			);
   	}
 
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
-  		echo 'test';
+
+  		if ($this->getArgument('create')) {
+
+
+  		}
+  		else if($this->getArgument('update')){
+
+  		}
+  		else{
+  			echo $this->getCommandHelp();
+  		}
   	}
 }
 

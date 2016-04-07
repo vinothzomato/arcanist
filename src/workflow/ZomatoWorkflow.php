@@ -101,6 +101,9 @@ EOTEXT
   		$branch = $repository->getBranchName();
   		$repo = $repository->getRemoteURI();
   		var_dump($branch); var_dump($repo);
+  		$pattern = "/git@github.com:(.*).git/";
+    	preg_match($pattern, $repo, $matches);
+    	var_dump($matches);
 
   		if (!strlen($base)) {
   			echo pht("zomato.base key not found in your local configuration please add zomato.base key to your .arcconfig file \n");

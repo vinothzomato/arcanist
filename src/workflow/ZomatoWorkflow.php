@@ -47,17 +47,25 @@ EOTEXT
 
   	public function getArguments() {
   		return array(
-  			'show' => array(
+  			'create' => array(
   				'help' => pht(
-  					'Show the amended commit message, without modifying the '.
-  					'working copy.'),
+  					'Create a revision.'),
   				),
-  			'revision' => array(
-  				'param' => 'revision_id',
+  			'update' => array(
   				'help' => pht(
-  					'Use the message from a specific revision. If you do not specify '.
-  					'a revision, arc will guess which revision is in the working '.
-  					'copy.'),
+  					'Update the revision'),
+  				),
+  			'title' => array(
+  				'help' => pht(
+  					'Title for the revision'),
+  				),
+  			'summary' => array(
+  				'help' => pht(
+  					'Summary for the revision'),
+  				),
+  			'plan' => array(
+  				'help' => pht(
+  					'Plan for the revision'),
   				),
   			);
   	}

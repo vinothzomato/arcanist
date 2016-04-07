@@ -50,39 +50,22 @@ EOTEXT
   	}
 
   	public function getArguments() {
-  		$arguments = array(
-  			'title' => array(
-  				'short'       => 't',
-  				'param'       => 'title',
+  		return array(
+  			'show' => array(
   				'help' => pht(
-  					'Title for the revision'),
+  					'Show the amended commit message, without modifying the '.
+  					'working copy.'),
   				),
-  			'summary' => array(
-  				'short'       => 's',
-  				'param'       => 'summary',
+  			'revision' => array(
+  				'param' => 'revision_id',
   				'help' => pht(
-  					'Summary for the revision'),
+  					'Use the message from a specific revision. If you do not specify '.
+  					'a revision, arc will guess which revision is in the working '.
+  					'copy.'),
   				),
-  			'plan' => array(
-  				'short'       => 'p',
-  				'param'       => 'plan',
-  				'help' => pht(
-  					'Plan for the revision'),
-  				),
-  			'create' => array(
-  				'short'       => 'c',
-  				'param'       => 'create',
-  				'help' => pht(
-  					'Create a new revision'),
-  				),
-  			'update' => array(
-  				'short'       => 'u',
-  				'param'       => 'update',
-  				'help' => pht(
-  					'Update the revision'),
-  				)
   			);
   	}
+  	
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
   		echo 'test';

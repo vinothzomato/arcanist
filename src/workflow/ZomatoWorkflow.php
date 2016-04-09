@@ -67,6 +67,27 @@ EOTEXT
   				'help' => pht(
   					'Update the revision'),
   				),
+  			'commit-push' => array(
+  				'conflicts' => array(
+  					'push'    => pht(
+  						'%s can not be used with %s.',
+  						'--commit-push',
+  						'--push'),
+  					),
+  				'short' => 'cp',
+  				'help' => pht(
+  					'Commit and Push the branch then do the arc commands'),
+  				),
+  			'push' => array(
+  				'short' => 'zp',
+  				'help' => pht(
+  					'Push the branch then do the arc commands'),
+  				),
+  			'commit-message' => array(
+  				'short' => 'cm',
+  				'help' => pht(
+  					'Commit message for the branch'),
+  				),
   			'message' => array(
   				'short' => 'm',
   				'param' => 'message',
@@ -136,6 +157,21 @@ EOTEXT
   		if (!strlen($repoId)) {
   			echo pht("repository.id key not found in your local configuration please add repository.id key to your .arcconfig file \n");
   			exit(1);
+  		}
+
+  		if ($this->getArgument('commit-push')) {
+  			$message = $this->getArgument('commit-message') ? 
+  						$this->getArgument('commit-message') : $this->getArgument('message') ? 
+  						$this->getArgument('message') : $this->getArgument('title');
+  			if (!strlen($message)) {
+  				echo pht("We need message to commit pass --message \n");
+  				exit(1);
+  			}
+  			$repository->execPassthru('commit -m \"'.$message.'\"');
+  			$repository->execPassthru('push origin '.$branch);
+  		}
+  		else if ($this->getArgument('push')) {
+  			$repository->execPassthru('push origin '.$branch);
   		}
 
   		if ($this->getArgument('create')) {

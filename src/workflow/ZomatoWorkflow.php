@@ -170,9 +170,15 @@ EOTEXT
   		}
 
   		if ($this->getArgument('add-commit-push')) {
-  			$message = $this->getArgument('commit-message') ? 
-  						$this->getArgument('commit-message') : $this->getArgument('message') ? 
-  						$this->getArgument('message') : $this->getArgument('title');
+  			$message = $this->getArgument('commit-message');
+  			
+  			if (!strlen($message)) {
+  				$message = $this->getArgument('message');
+  			}
+  			if (!strlen($message)) {
+  				$message = $this->getArgument('title');
+  			}		
+
   			if (!strlen($message)) {
   				echo pht("We need message to commit pass --message \n");
   				exit(1);
@@ -181,9 +187,15 @@ EOTEXT
   			$repository->execPassthru('push origin '.$branch);
   		}	
 		else if ($this->getArgument('commit-push')) {
-  			$message = $this->getArgument('commit-message') ? 
-  						$this->getArgument('commit-message') : $this->getArgument('message') ? 
-  						$this->getArgument('message') : $this->getArgument('title');
+  			$message = $this->getArgument('commit-message');
+  			
+  			if (!strlen($message)) {
+  				$message = $this->getArgument('message');
+  			}
+  			if (!strlen($message)) {
+  				$message = $this->getArgument('title');
+  			}		
+
   			if (!strlen($message)) {
   				echo pht("We need message to commit pass --message \n");
   				exit(1);

@@ -84,6 +84,7 @@ EOTEXT
   					'Push the branch then do the arc commands'),
   				),
   			'commit-message' => array(
+  				'param' => 'message',
   				'short' => 'cm',
   				'help' => pht(
   					'Commit message for the branch'),

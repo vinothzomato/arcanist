@@ -177,7 +177,6 @@ EOTEXT
   				echo pht("We need message to commit pass --message \n");
   				exit(1);
   			}
-  			var_dump('commit -am \"'.$message.'\"');
   			$repository->execPassthru('commit -am "'.$message.'"');
   			$repository->execPassthru('push origin '.$branch);
   		}	

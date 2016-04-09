@@ -73,10 +73,19 @@ EOTEXT
   						'%s can not be used with %s.',
   						'--commit-push',
   						'--push'),
+  					'add-commit-push'    => pht(
+  						'%s can not be used with %s.',
+  						'--commit-push',
+  						'--add-commit-push'),
   					),
   				'short' => 'cp',
   				'help' => pht(
   					'Commit and Push the branch then do the arc commands'),
+  				),
+  			'add-commit-push' => array(
+  				'short' => 'acp',
+  				'help' => pht(
+  					'Add files,commit and push the branch then do the arc commands'),
   				),
   			'push' => array(
   				'short' => 'zp',
@@ -160,7 +169,18 @@ EOTEXT
   			exit(1);
   		}
 
-  		if ($this->getArgument('commit-push')) {
+  		if ($this->getArgument('add-commit-push')) {
+  			$message = $this->getArgument('commit-message') ? 
+  						$this->getArgument('commit-message') : $this->getArgument('message') ? 
+  						$this->getArgument('message') : $this->getArgument('title');
+  			if (!strlen($message)) {
+  				echo pht("We need message to commit pass --message \n");
+  				exit(1);
+  			}
+  			$repository->execPassthru('commit -am \"'.$message.'\"');
+  			$repository->execPassthru('push origin '.$branch);
+  		}	
+		else if ($this->getArgument('commit-push')) {
   			$message = $this->getArgument('commit-message') ? 
   						$this->getArgument('commit-message') : $this->getArgument('message') ? 
   						$this->getArgument('message') : $this->getArgument('title');

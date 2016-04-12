@@ -139,7 +139,7 @@ EOTEXT
   		$pattern = "/git@github.com:(.*).git/";
     	preg_match($pattern, $repo, $matches);
     	if (isset($matches[1])) {
-    		$repoURL = "https://api.github.com/".$matches[1];
+    		$repoURL = "https://api.github.com/repos/".$matches[1];
     	}
     	else{
     		$pattern = "https://github.com/(.*).git/";

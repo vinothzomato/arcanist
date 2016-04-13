@@ -144,7 +144,7 @@ EOTEXT
       $lint_result = $data['lintResult'];
       $excuse = $this->getArgument('excuse');
       if ($lint_result === ArcanistLintWorkflow::RESULT_ERRORS && $excuse === null) {
-        echo pht("Lint has errors. Please fix the lint issues or provide excuse with --excuse");
+        echo pht("Lint has errors. Please fix the lint issues or provide excuse with --excuse \n");
         exit(1);
       }
   		$console = $this->console;

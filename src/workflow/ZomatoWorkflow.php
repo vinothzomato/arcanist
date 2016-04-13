@@ -385,17 +385,10 @@ EOTEXT
   }
 
   private function getErrorExcuse($type, $prompt, $history) {
-    if ($this->getArgument('excuse')) {
-      $this->console->sendMessage(array(
-        'type'    => $type,
-        'confirm'  => $prompt.' '.pht('Ignore them?'),
-      ));
-      return;
-    }
 
     $history = $this->getRepositoryAPI()->getScratchFilePath($history);
 
-    $prompt .= ' '.
+    $prompt = ' '.
       pht('Provide explanation to continue or press Enter to abort.');
     $this->console->writeOut("\n\n%s", phutil_console_wrap($prompt));
     $this->console->sendMessage(array(

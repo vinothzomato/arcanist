@@ -338,10 +338,10 @@ EOTEXT
       switch ($lint_result) {
         case ArcanistLintWorkflow::RESULT_OKAY:
           if ($lint_workflow->getUnresolvedMessages()) {
-            $this->getErrorExcuse(
-              'lint',
-              pht('Lint issued unresolved advice.'),
-              'lint-excuses');
+            $this->console->writeOut(
+              "<bg:red>** %s **</bg> %s\n",
+              pht('LINT ERRORS'),
+              pht('Lint raised errors!'));
           } else {
             $this->console->writeOut(
               "<bg:green>** %s **</bg> %s\n",
@@ -350,20 +350,16 @@ EOTEXT
           }
           break;
         case ArcanistLintWorkflow::RESULT_WARNINGS:
-          $this->getErrorExcuse(
-            'lint',
-            pht('Lint issued unresolved warnings.'),
-            'lint-excuses');
+          $this->console->writeOut(
+            "<bg:yellow>** %s **</bg> %s\n",
+            pht('LINT WARNINGS'),
+            pht('Lint raised warnings!'));
           break;
         case ArcanistLintWorkflow::RESULT_ERRORS:
           $this->console->writeOut(
             "<bg:red>** %s **</bg> %s\n",
             pht('LINT ERRORS'),
             pht('Lint raised errors!'));
-          $this->getErrorExcuse(
-            'lint',
-            pht('Lint issued unresolved errors!'),
-            'lint-excuses');
           break;
       }
 
@@ -371,7 +367,6 @@ EOTEXT
       foreach ($lint_workflow->getUnresolvedMessages() as $message) {
         $this->unresolvedLint[] = $message->toDictionary();
       }
-
       return $lint_result;
     } catch (ArcanistNoEngineException $ex) {
       $this->console->writeOut(
@@ -382,20 +377,6 @@ EOTEXT
     }
 
     return null;
-  }
-
-  private function getErrorExcuse($type, $prompt, $history) {
-
-    $history = $this->getRepositoryAPI()->getScratchFilePath($history);
-
-    $prompt = ' '.
-      pht('Provide explanation to continue or press Enter to abort.');
-    $this->console->writeOut("\n\n%s", phutil_console_wrap($prompt));
-    $this->console->sendMessage(array(
-      'type'    => 'lint',
-      'prompt'  => pht('Explanation:'),
-      'history' => $history,
-    ));
   }
 }
 

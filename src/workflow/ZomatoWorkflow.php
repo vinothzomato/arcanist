@@ -392,7 +392,7 @@ EOTEXT
       pht('Provide explanation to continue or press Enter to abort.');
     $this->console->writeOut("\n\n%s", phutil_console_wrap($prompt));
     $this->console->sendMessage(array(
-      'type'    => $type,
+      'type'    => 'lint',
       'prompt'  => pht('Explanation:'),
       'history' => $history,
     ));

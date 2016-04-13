@@ -123,6 +123,17 @@ EOTEXT
   				'help' => pht(
   					'Plan for the revision while creating a new revision'),
   				),
+        'excuse' => array(
+          'short' => 'e',
+          'param' => 'message',
+          'help' => pht(
+            'Excuse message for lint errors'),
+          ),
+        'nolint' => array(
+          'short' => 'nl',
+          'help' => pht(
+            'Skip linting.'),
+          ),
   			);
   	}
 
@@ -130,8 +141,12 @@ EOTEXT
   		$this->console = PhutilConsole::getConsole();
 
       $data = $this->runLintUnit();
-      var_dump($data); die();
-
+      $lint_result = $data['lintResult'];
+      $excuse = $this->getArgument('excuse');
+      if ($lint_result === ArcanistLintWorkflow::RESULT_ERRORS && $excuse === null) {
+        echo pht("Lint has errors. Please fix the lint issues or provide excuse with --excuse");
+        exit(1);
+      }
   		$console = $this->console;
   		$repository = $this->getRepositoryAPI();
   		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
@@ -234,6 +249,7 @@ EOTEXT
   				'head' => $branch,
   				'repoId' => $repoId,
   				'projectId' => $projectId,
+          'lintStatus' => $this->getLintStatus($lint_result),
   				);
 
   			$result = $conduit->callMethodSynchronous(

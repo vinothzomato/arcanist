@@ -4,12 +4,13 @@ final class ZomatoWorkflow extends ArcanistWorkflow {
 
 	private $console;
 	private $diffID;
-  	private $revisionID;
-  	private $haveUncommittedChanges = false;
+  private $revisionID;
+  private $unresolvedLint;
+  private $haveUncommittedChanges = false;
 
-  	const BASE_CONFIGKEY = 'zomato.base';
-  	const PROJECT_CONFIGKEY = 'project.id';
-  	const REPOSITORY_CONFIGKEY = 'repository.id';
+  const BASE_CONFIGKEY = 'zomato.base';
+  const PROJECT_CONFIGKEY = 'project.id';
+  const REPOSITORY_CONFIGKEY = 'repository.id';
 
 	public function getWorkflowName() {
 		return 'z';
@@ -127,6 +128,10 @@ EOTEXT
 
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
+
+      $data = $this->runLintUnit();
+      var_dump($data); die();
+
   		$console = $this->console;
   		$repository = $this->getRepositoryAPI();
   		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
@@ -262,6 +267,122 @@ EOTEXT
   		}
   		echo "\n";
   	}
+
+  /* -(  Diff Specification  )------------------------------------------------- */
+
+  /**
+   * @task diffspec
+   */
+  private function getLintStatus($lint_result) {
+    $map = array(
+      ArcanistLintWorkflow::RESULT_OKAY       => 'okay',
+      ArcanistLintWorkflow::RESULT_ERRORS     => 'fail',
+      ArcanistLintWorkflow::RESULT_WARNINGS   => 'warn',
+      ArcanistLintWorkflow::RESULT_SKIP       => 'skip',
+    );
+    return idx($map, $lint_result, 'none');
+  }
+
+  /**
+   * @task diffspec
+   */
+  private function getUnitStatus($unit_result) {
+    $map = array(
+      ArcanistUnitWorkflow::RESULT_OKAY       => 'okay',
+      ArcanistUnitWorkflow::RESULT_FAIL       => 'fail',
+      ArcanistUnitWorkflow::RESULT_UNSOUND    => 'warn',
+      ArcanistUnitWorkflow::RESULT_SKIP       => 'skip',
+    );
+    return idx($map, $unit_result, 'none');
+  }
+
+  /* -(  Lint and Unit Tests  )------------------------------------------------ */
+
+
+  /**
+   * @task lintunit
+   */
+  private function runLintUnit() {
+    $lint_result = $this->runLint();
+    //$unit_result = $this->runUnit();
+    return array(
+      'lintResult' => $lint_result,
+      'unresolvedLint' => $this->unresolvedLint,
+      //'unitResult' => $unit_result,
+      //'testResults' => $this->testResults,
+    );
+  }
+
+
+  /**
+   * @task lintunit
+   */
+  private function runLint() {
+    if ($this->getArgument('nolint')) {
+      return ArcanistLintWorkflow::RESULT_SKIP;
+    }
+
+    $repository_api = $this->getRepositoryAPI();
+
+    $this->console->writeOut("%s\n", pht('Linting...'));
+    try {
+      $argv = $this->getPassthruArgumentsAsArgv('lint');
+      if ($repository_api->supportsCommitRanges()) {
+        $argv[] = '--rev';
+        $argv[] = $repository_api->getBaseCommit();
+      }
+
+      $lint_workflow = $this->buildChildWorkflow('lint', $argv);
+      $lint_result = $lint_workflow->run();
+
+      switch ($lint_result) {
+        case ArcanistLintWorkflow::RESULT_OKAY:
+          if ($lint_workflow->getUnresolvedMessages()) {
+            $this->getErrorExcuse(
+              'lint',
+              pht('Lint issued unresolved advice.'),
+              'lint-excuses');
+          } else {
+            $this->console->writeOut(
+              "<bg:green>** %s **</bg> %s\n",
+              pht('LINT OKAY'),
+              pht('No lint problems.'));
+          }
+          break;
+        case ArcanistLintWorkflow::RESULT_WARNINGS:
+          $this->getErrorExcuse(
+            'lint',
+            pht('Lint issued unresolved warnings.'),
+            'lint-excuses');
+          break;
+        case ArcanistLintWorkflow::RESULT_ERRORS:
+          $this->console->writeOut(
+            "<bg:red>** %s **</bg> %s\n",
+            pht('LINT ERRORS'),
+            pht('Lint raised errors!'));
+          $this->getErrorExcuse(
+            'lint',
+            pht('Lint issued unresolved errors!'),
+            'lint-excuses');
+          break;
+      }
+
+      $this->unresolvedLint = array();
+      foreach ($lint_workflow->getUnresolvedMessages() as $message) {
+        $this->unresolvedLint[] = $message->toDictionary();
+      }
+
+      return $lint_result;
+    } catch (ArcanistNoEngineException $ex) {
+      $this->console->writeOut(
+        "%s\n",
+        pht('No lint engine configured for this project.'));
+    } catch (ArcanistNoEffectException $ex) {
+      $this->console->writeOut("%s\n", $ex->getMessage());
+    }
+
+    return null;
+  }
 }
 
 ?>

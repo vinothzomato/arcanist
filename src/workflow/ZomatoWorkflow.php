@@ -170,16 +170,16 @@ EOTEXT
   		$branch = $repository->getBranchName();
   		$repo = $repository->getRemoteURI();
   		$repoURL = null;
-  		$pattern = "/git@github.com:(.*).git/";
+  		$pattern = "/git@github\.com:[^\/]*\/(.*).git/";
     	preg_match($pattern, $repo, $matches);
     	if (isset($matches[1])) {
-    		$repoURL = "https://api.github.com/repos/".$matches[1];
+    		$repoURL = "https://api.github.com/repos/Zomato/".$matches[1];
     	}
     	else{
-    		$pattern = "https://github.com/(.*).git/";
+    		$pattern = "/https:\/\/github\.com\/[^\/]*\/(.*).git/";
     		preg_match($pattern, $repo, $matches);
     		if (isset($matches[1])) {
-    			$repoURL = "https://api.github.com/repos/".$matches[1];
+    			$repoURL = "https://api.github.com/repos/Zomato/".$matches[1];
     		}
     	}
     	

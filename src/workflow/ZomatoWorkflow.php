@@ -99,6 +99,12 @@ EOTEXT
   				'help' => pht(
   					'Commit message for the branch'),
   				),
+        'project' => array(
+          'param' => 'message',
+          'short' => 'p',
+          'help' => pht(
+            'Project Id for the revision'),
+          ),
   			'message' => array(
   				'short' => 'm',
   				'param' => 'message',
@@ -151,7 +157,12 @@ EOTEXT
   		$console = $this->console;
   		$repository = $this->getRepositoryAPI();
   		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
-  		$projectId = $this->getConfigFromAnySource(self::PROJECT_CONFIGKEY);
+      if ($this->getArgument('project')) {
+        $projectId = $this->getArgument('project');
+      }
+      else{
+        $projectId = $this->getConfigFromAnySource(self::PROJECT_CONFIGKEY);
+      }
   		$repoId = $this->getConfigFromAnySource(self::REPOSITORY_CONFIGKEY);
   		$conduit = $this->getConduit();
   		$branch = $repository->getBranchName();

@@ -124,8 +124,8 @@ EOTEXT
   				'help' => pht(
   					'Summary for the revision while creating a new revision'),
   				),
-  			'plan' => array(
-  				'short' => 'p',
+  			'test-plan' => array(
+  				'short' => 'tp',
   				'param' => 'message',
   				'help' => pht(
   					'Plan for the revision while creating a new revision'),

@@ -159,12 +159,8 @@ EOTEXT
   		$repository = $this->getRepositoryAPI();
   		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
       $origin = $this->getConfigFromAnySource(self::PUSH_ORIGIN_CONFIGKEY) ? $this->getConfigFromAnySource(self::PUSH_ORIGIN_CONFIGKEY) : 'origin';
-      if ($this->getArgument('project')) {
-        $projectId = $this->getArgument('project');
-      }
-      else{
-        $projectId = $this->getConfigFromAnySource(self::PROJECT_CONFIGKEY);
-      }
+      $projectId = $this->getArgument('project') ? $this->getArgument('project') : $this->getConfigFromAnySource(self::PROJECT_CONFIGKEY);
+      var_dump($projectId); die();
   		$repoId = $this->getConfigFromAnySource(self::REPOSITORY_CONFIGKEY);
   		$conduit = $this->getConduit();
   		$branch = $repository->getBranchName();

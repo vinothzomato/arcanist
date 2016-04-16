@@ -10,6 +10,7 @@ final class ZomatoWorkflow extends ArcanistWorkflow {
 
   const BASE_CONFIGKEY = 'zomato.base';
   const PROJECT_CONFIGKEY = 'project.id';
+  const PUSH_ORIGIN_CONFIGKEY = 'push.origin';
   const REPOSITORY_CONFIGKEY = 'repository.id';
 
 	public function getWorkflowName() {
@@ -157,6 +158,7 @@ EOTEXT
   		$console = $this->console;
   		$repository = $this->getRepositoryAPI();
   		$base = $this->getConfigFromAnySource(self::BASE_CONFIGKEY);
+      $origin = $this->getConfigFromAnySource(self::PUSH_ORIGIN_CONFIGKEY) ? $this->getConfigFromAnySource(self::PUSH_ORIGIN_CONFIGKEY) : 'origin';
       if ($this->getArgument('project')) {
         $projectId = $this->getArgument('project');
       }
@@ -216,7 +218,7 @@ EOTEXT
   				exit(1);
   			}
   			$repository->execPassthru('commit -am "'.$message.'"');
-  			$repository->execPassthru('push origin '.$branch);
+  			$repository->execPassthru('push '.$origin.' '.$branch);
   		}	
 		else if ($this->getArgument('commit-push')) {
   			$message = $this->getArgument('commit-message');
@@ -233,10 +235,10 @@ EOTEXT
   				exit(1);
   			}
   			$repository->execPassthru('commit -m "'.$message.'"');
-  			$repository->execPassthru('push origin '.$branch);
+  			$repository->execPassthru('push '.$origin.' '.$branch);
   		}
   		else if ($this->getArgument('push')) {
-  			$repository->execPassthru('push origin '.$branch);
+  			$repository->execPassthru('push '.$origin.' '.$branch);
   		}
 
   		if ($this->getArgument('create')) {

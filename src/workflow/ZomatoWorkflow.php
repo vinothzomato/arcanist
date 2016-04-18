@@ -248,9 +248,9 @@ EOTEXT
           $diff_params);
       $diff = $diff_result['diff'];
 
-      $raw_diff = $repository_api->getFullGitDiff(
-        $repository_api->getBaseCommit(),
-        $repository_api->getHeadCommit());
+      $raw_diff = $repository->getFullGitDiff(
+        $repository->getBaseCommit(),
+        $repository->getHeadCommit());
 
       var_dump($diff);
       var_dump($raw_diff);

@@ -266,9 +266,6 @@ EOTEXT
       $bundle = ArcanistBundle::newFromDiff($change_diff);
       $new_diff = $bundle->toGitPatch();
 
-      echo $new_diff;
-      die();
-
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');
   			if (!strlen($title)) {
@@ -286,7 +283,7 @@ EOTEXT
 
   			$revision = array(
           'changes' => mpull($changes, 'toDictionary'),
-          'diff' => $diff,
+          'diff' => $new_diff,
   				'fields' => $fields, 
   				'repo' => $repoURL,
   				'base' => $base,
@@ -309,7 +306,7 @@ EOTEXT
   			$message = $this->getArgument('message') ? $this->getArgument('message') : 'No update message';
   			$revision = array(
           'changes' => mpull($changes, 'toDictionary'),
-          'diff' => $diff,
+          'diff' => $new_diff,
   				'repo' => $repoURL,
   				'base' => $base,
   				'head' => $branch,

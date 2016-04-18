@@ -240,6 +240,7 @@ EOTEXT
         'repo' => $repoURL,
         'base' => $base,
         'head' => $branch,
+        'projectId' => $projectId,
         );
 
       $diff_result = $conduit->callMethodSynchronous(

@@ -283,7 +283,7 @@ EOTEXT
 
   			$revision = array(
           'changes' => mpull($changes, 'toDictionary'),
-          'diff' => $diff,
+//          'diff' => $diff,
   				'fields' => $fields, 
   				'repo' => $repoURL,
   				'base' => $base,
@@ -306,7 +306,7 @@ EOTEXT
   			$message = $this->getArgument('message') ? $this->getArgument('message') : 'No update message';
   			$revision = array(
           'changes' => mpull($changes, 'toDictionary'),
-          'diff' => $diff,
+//          'diff' => $diff,
   				'repo' => $repoURL,
   				'base' => $base,
   				'head' => $branch,

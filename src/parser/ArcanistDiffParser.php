@@ -1245,6 +1245,7 @@ final class ArcanistDiffParser extends Phobject {
     $imagechanges = array();
 
     $changes = $this->changes;
+    var_dump($changes);
     foreach ($changes as $change) {
       $path = $change->getCurrentPath();
 

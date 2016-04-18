@@ -246,17 +246,11 @@ EOTEXT
       $diff_result = $conduit->callMethodSynchronous(
           'zomato.getdiff',
           $diff_params);
-      $raw_diff = $diff_result['diff'];
+      $diff = $diff_result['diff'];
 
-      echo $raw_diff."\n";
-      echo "ok \n";
-
-      $diff = $repository->getFullGitDiff(
-        $repository->getBaseCommit(),
-         $repository->getHeadCommit());
-
-      echo $diff."\n";
-      die();
+      //$diff = $repository->getFullGitDiff(
+      //  $repository->getBaseCommit(),
+      //   $repository->getHeadCommit());
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);

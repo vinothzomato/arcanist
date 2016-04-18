@@ -247,10 +247,7 @@ EOTEXT
           'zomato.getdiff',
           $diff_params);
       $diff = $diff_result['diff'];
-
-      echo $diff;
-      echo "\n ok \n";
-
+      
       //$diff = $repository->getFullGitDiff(
       //  $repository->getBaseCommit(),
       //   $repository->getHeadCommit());
@@ -263,8 +260,8 @@ EOTEXT
         $change_diff = $change_diff."\n".$repository->getRawDiffText($path, $moves = false);
       }
 
-      echo $change_diff;
-      die();
+      $parser = $this->newDiffParser();
+      $changes = $parser->parseDiff($change_diff);
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

@@ -279,7 +279,7 @@ EOTEXT
   				) + $this->buildDiffSpecification();
 
   			$result = $conduit->callMethodSynchronous(
-  				'zomato.createrevisiontest',
+  				'zomato.createrevision',
   				$revision);
   			$uri = $result['uri'];
   			echo phutil_console_format(

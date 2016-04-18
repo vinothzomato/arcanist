@@ -259,10 +259,10 @@ EOTEXT
   				'repoId' => $repoId,
   				'projectId' => $projectId,
           'lintStatus' => $this->getLintStatus($lint_result),
-  				);
+  				) + $this->buildDiffSpecification();
 
   			$result = $conduit->callMethodSynchronous(
-  				'zomato.createrevision',
+  				'zomato.createrevisiontest',
   				$revision);
   			$uri = $result['uri'];
   			echo phutil_console_format(
@@ -277,7 +277,7 @@ EOTEXT
   				'base' => $base,
   				'head' => $branch,
   				'message' => $message,
-  				);
+  				) + $this->buildDiffSpecification();
   			$result = $conduit->callMethodSynchronous(
   				'zomato.updaterevision',
   				$revision);
@@ -402,6 +402,64 @@ EOTEXT
     }
 
     return null;
+  }
+
+    /**
+   * @task diffspec
+   */
+  private function buildDiffSpecification() {
+
+    $base_revision  = null;
+    $base_path      = null;
+    $vcs            = null;
+    $repo_uuid      = null;
+    $parent         = null;
+    $source_path    = null;
+    $branch         = null;
+    $bookmark       = null;
+
+    $repository_api = $this->getRepositoryAPI();
+
+    $base_revision  = $repository_api->getSourceControlBaseRevision();
+    $base_path      = $repository_api->getSourceControlPath();
+    $vcs            = $repository_api->getSourceControlSystemName();
+    $source_path    = $repository_api->getPath();
+    $branch         = $repository_api->getBranchName();
+    $repo_uuid      = $repository_api->getRepositoryUUID();
+
+    // if ($repository_api instanceof ArcanistGitAPI) {
+    //   $info = $this->getGitParentLogInfo();
+    //   if ($info['parent']) {
+    //     $parent = $info['parent'];
+    //   }
+    //   if ($info['base_revision']) {
+    //     $base_revision = $info['base_revision'];
+    //   }
+    //   if ($info['base_path']) {
+    //     $base_path = $info['base_path'];
+    //   }
+    //   if ($info['uuid']) {
+    //     $repo_uuid = $info['uuid'];
+    //   }
+    // } 
+
+    $data = array(
+      'sourceMachine'             => php_uname('n'),
+      'sourcePath'                => $source_path,
+      'branch'                    => $branch,
+      'bookmark'                  => $bookmark,
+      'sourceControlSystem'       => $vcs,
+      'sourceControlPath'         => $base_path,
+      'sourceControlBaseRevision' => $base_revision,
+      'creationMethod'            => 'arc z',
+    );
+
+    // $repository_phid = $this->getRepositoryPHID();
+    // if ($repository_phid) {
+    //   $data['repositoryPHID'] = $repository_phid;
+    // }
+
+    return $data;
   }
 }
 

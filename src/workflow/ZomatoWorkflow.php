@@ -261,6 +261,9 @@ EOTEXT
           'lintStatus' => $this->getLintStatus($lint_result),
   				) + $this->buildDiffSpecification();
 
+        var_dump($revision);
+        die();
+
   			$result = $conduit->callMethodSynchronous(
   				'zomato.createrevisiontest',
   				$revision);

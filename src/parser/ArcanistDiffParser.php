@@ -1248,14 +1248,12 @@ final class ArcanistDiffParser extends Phobject {
     var_dump($changes);
     foreach ($changes as $change) {
       $path = $change->getCurrentPath();
-      $diff = $repository_api->getRawDiffText($path, $moves = false);
-
-      var_dump($diff); die();
 
       // Certain types of changes (moves and copies) don't contain change data
       // when expressed in raw "git diff" form. Augment any such diffs with
       // textual data.
-      if ($change->getNeedsSyntheticGitHunks() &&
+      //if ($change->getNeedsSyntheticGitHunks() &&
+      if (
           ($repository_api instanceof ArcanistGitAPI)) {
         $diff = $repository_api->getRawDiffText($path, $moves = false);
 
@@ -1281,7 +1279,7 @@ final class ArcanistDiffParser extends Phobject {
           }
         }
 
-        $change->setNeedsSyntheticGitHunks(false);
+        //$change->setNeedsSyntheticGitHunks(false);
       }
 
       if ($change->getFileType() != ArcanistDiffChangeType::FILE_BINARY &&

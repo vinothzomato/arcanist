@@ -253,7 +253,6 @@ EOTEXT
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
-      var_dump($changes); die();
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');
@@ -271,6 +270,8 @@ EOTEXT
   				);
 
   			$revision = array(
+          'changes' => mpull($changes, 'toDictionary'),
+          'diff' => $diff,
   				'fields' => $fields, 
   				'repo' => $repoURL,
   				'base' => $base,

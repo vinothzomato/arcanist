@@ -215,7 +215,7 @@ EOTEXT
   			$repository->execPassthru('commit -am "'.$message.'"');
   			$repository->execPassthru('push '.$origin.' '.$branch);
   		}	
-		else if ($this->getArgument('commit-push')) {
+		  else if ($this->getArgument('commit-push')) {
   			$message = $this->getArgument('commit-message');
   			
   			if (!strlen($message)) {
@@ -235,6 +235,21 @@ EOTEXT
   		else if ($this->getArgument('push')) {
   			$repository->execPassthru('push '.$origin.' '.$branch);
   		}
+
+      $diff_params = array(
+        'repo' => $repoURL,
+        'base' => $base,
+        'head' => $branch,
+        );
+
+      $diff_result = $conduit->callMethodSynchronous(
+          'zomato.getdiff',
+          $diff_params);
+      $diff = $diff_result['diff'];
+
+      $parser = $this->newDiffParser();
+      $changes = $parser->parseDiff($diff);
+      var_dump($changes); die();
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

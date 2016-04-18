@@ -316,11 +316,11 @@ EOTEXT
   				'zomato.updaterevision',
   				$revision);
         var_dump($result);
-  			$uri = $result['uri'];
-  			echo phutil_console_format(
-  				"        **%s** __%s__\n\n",
-  				pht('Revision Updated:'),
-  				$uri);
+  			// $uri = $result['uri'];
+  			// echo phutil_console_format(
+  			// 	"        **%s** __%s__\n\n",
+  			// 	pht('Revision Updated:'),
+  			// 	$uri);
   		}
   		else{
   			echo $this->getCommandHelp();

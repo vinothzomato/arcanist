@@ -248,9 +248,6 @@ EOTEXT
           $diff_params);
       $diff = $diff_result['diff'];
 
-      var_dump($diff_result);
-      var_dump($diff_params);
-
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
 
@@ -280,9 +277,6 @@ EOTEXT
   				'projectId' => $projectId,
           'lintStatus' => $this->getLintStatus($lint_result),
   				) + $this->buildDiffSpecification();
-
-        var_dump($revision);
-        die();
 
   			$result = $conduit->callMethodSynchronous(
   				'zomato.createrevisiontest',

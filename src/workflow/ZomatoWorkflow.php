@@ -243,14 +243,20 @@ EOTEXT
         'projectId' => $projectId,
         );
 
-      // $diff_result = $conduit->callMethodSynchronous(
-      //     'zomato.getdiff',
-      //     $diff_params);
-      // $diff = $diff_result['diff'];
+      $diff_result = $conduit->callMethodSynchronous(
+          'zomato.getdiff',
+          $diff_params);
+      $raw_diff = $diff_result['diff'];
+
+      echo $raw_diff."\n";
+      echo "ok \n";
 
       $diff = $repository->getFullGitDiff(
         $repository->getBaseCommit(),
          $repository->getHeadCommit());
+
+      echo $diff."\n";
+      die();
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);

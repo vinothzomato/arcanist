@@ -315,10 +315,10 @@ EOTEXT
   			$result = $conduit->callMethodSynchronous(
   				'zomato.updaterevision',
   				$revision);
-  			$uri = $result['uri'];
-        if (!strlen($uri)) {
+        if (!isset($result['uri'])) {
           var_dump($result);
         }
+  			$uri = $result['uri'];
   			echo phutil_console_format(
   				"        **%s** __%s__\n\n",
   				pht('Revision Updated:'),

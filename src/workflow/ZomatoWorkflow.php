@@ -257,11 +257,17 @@ EOTEXT
       $change_diff = "";
       foreach ($changes as $change) {
         $path = $change->getCurrentPath();
-        $change_diff = $change_diff."\n".$repository->getRawDiffText($path, $moves = false);
+        $change_diff = $change_diff.$repository->getRawDiffText($path, $moves = false);
       }
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($change_diff);
+
+      $bundle = ArcanistBundle::newFromDiff($change_diff);
+      $new_diff = $bundle->toGitPatch();
+
+      echo $new_diff;
+      die();
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

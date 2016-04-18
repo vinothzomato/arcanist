@@ -247,6 +247,9 @@ EOTEXT
           $diff_params);
       $diff = $diff_result['diff'];
 
+      var_dump($diff_result);
+      var_dump($diff_params);
+
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
       var_dump($changes); die();

@@ -1248,6 +1248,9 @@ final class ArcanistDiffParser extends Phobject {
     var_dump($changes);
     foreach ($changes as $change) {
       $path = $change->getCurrentPath();
+      $diff = $repository_api->getRawDiffText($path, $moves = false);
+
+      var_dump($diff); die();
 
       // Certain types of changes (moves and copies) don't contain change data
       // when expressed in raw "git diff" form. Augment any such diffs with
@@ -1255,8 +1258,6 @@ final class ArcanistDiffParser extends Phobject {
       if ($change->getNeedsSyntheticGitHunks() &&
           ($repository_api instanceof ArcanistGitAPI)) {
         $diff = $repository_api->getRawDiffText($path, $moves = false);
-
-        var_dump($diff); die();
 
         // NOTE: We're reusing the parser and it doesn't reset change state
         // between parses because there's an oddball SVN workflow in Phabricator

@@ -247,7 +247,7 @@ EOTEXT
           'zomato.getdiff',
           $diff_params);
       $diff = $diff_result['diff'];
-      
+
       //$diff = $repository->getFullGitDiff(
       //  $repository->getBaseCommit(),
       //   $repository->getHeadCommit());
@@ -302,6 +302,8 @@ EOTEXT
   		else if($this->getArgument('update')){
   			$message = $this->getArgument('message') ? $this->getArgument('message') : 'No update message';
   			$revision = array(
+          'changes' => mpull($changes, 'toDictionary'),
+          'diff' => $diff,
   				'repo' => $repoURL,
   				'base' => $base,
   				'head' => $branch,

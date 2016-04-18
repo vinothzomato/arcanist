@@ -455,7 +455,7 @@ EOTEXT
   public function run() {
 
     echo "Not allowed to use this command :p blocked by zomato infra team.... don't be too smart :) :) \n";
-    die();
+    //die();
 
     $this->console = PhutilConsole::getConsole();
 
@@ -510,6 +510,8 @@ EOTEXT
       throw new ArcanistUsageException(
         pht('There are no changes to generate a diff from!'));
     }
+
+    var_dump($changes); die();
 
     $diff_spec = array(
       'changes' => mpull($changes, 'toDictionary'),

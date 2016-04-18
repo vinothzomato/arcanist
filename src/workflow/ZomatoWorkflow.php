@@ -255,8 +255,6 @@ EOTEXT
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
 
-      die();
-
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');
   			if (!strlen($title)) {

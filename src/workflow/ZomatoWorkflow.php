@@ -316,6 +316,9 @@ EOTEXT
   				'zomato.updaterevision',
   				$revision);
   			$uri = $result['uri'];
+        if (!strlen($uri)) {
+          var_dump($result);
+        }
   			echo phutil_console_format(
   				"        **%s** __%s__\n\n",
   				pht('Revision Updated:'),

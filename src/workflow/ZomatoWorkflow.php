@@ -298,7 +298,11 @@ EOTEXT
   				$revision);
         if (!isset($result['uri'])) {
            echo $result['old'];
+           echo "\n";
+           echo strlen($result['old']);
           echo "\n ok \n";
+          echo strlen($result['new']);
+          echo "\n";
           echo $result['new'];
           // var_dump($result);
         }

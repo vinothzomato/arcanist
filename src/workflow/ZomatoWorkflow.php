@@ -248,13 +248,7 @@ EOTEXT
           $diff_params);
       $diff = $diff_result['diff'];
 
-      $raw_diff = $repository->getFullGitDiff(
-        $repository->getBaseCommit(),
-        $repository->getHeadCommit());
-
-      var_dump($diff);
-      var_dump($raw_diff);
-      die();
+      $changes = $parser->parseDiff($diff);
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

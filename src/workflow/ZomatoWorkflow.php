@@ -296,6 +296,9 @@ EOTEXT
   			$result = $conduit->callMethodSynchronous(
   				'zomato.createrevision',
   				$revision);
+        if (!isset($result['uri'])) {
+          var_dump($result);
+        }
   			$uri = $result['uri'];
   			echo phutil_console_format(
   				"        **%s** __%s__\n\n",
@@ -315,12 +318,14 @@ EOTEXT
   			$result = $conduit->callMethodSynchronous(
   				'zomato.updaterevision',
   				$revision);
-        var_dump($result);
-  			// $uri = $result['uri'];
-  			// echo phutil_console_format(
-  			// 	"        **%s** __%s__\n\n",
-  			// 	pht('Revision Updated:'),
-  			// 	$uri);
+        if (!isset($result['uri'])) {
+          var_dump($result);
+        }
+  			$uri = $result['uri'];
+  			echo phutil_console_format(
+  				"        **%s** __%s__\n\n",
+  				pht('Revision Updated:'),
+  				$uri);
   		}
   		else{
   			echo $this->getCommandHelp();

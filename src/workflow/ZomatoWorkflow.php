@@ -248,12 +248,23 @@ EOTEXT
           $diff_params);
       $diff = $diff_result['diff'];
 
+      echo $diff;
+      echo "\n ok \n";
+
       //$diff = $repository->getFullGitDiff(
       //  $repository->getBaseCommit(),
       //   $repository->getHeadCommit());
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
+      $change_diff = "";
+      foreach ($changes as $change) {
+        $path = $change->getCurrentPath();
+        $change_diff = $change_diff."\n".$repository->getRawDiffText($path, $moves = false);
+      }
+
+      echo $change_diff;
+      die();
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

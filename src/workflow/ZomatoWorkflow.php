@@ -319,7 +319,10 @@ EOTEXT
   				'zomato.updaterevision',
   				$revision);
         if (!isset($result['uri'])) {
-          var_dump($result);
+          echo $result['old'];
+          echo "\n ok \n";
+          echo $result['new'];
+          //var_dump($result);
         }
   			$uri = $result['uri'];
   			echo phutil_console_format(

@@ -67,8 +67,29 @@ EOTEXT
   			'update' => array(
   				'short' => 'u',
   				'help' => pht(
-  					'Update the revision'),
+  					'Update the revision. '),
   				),
+        'accept' => array(
+          'short' => 'a',
+          'help' => pht(
+            'Accept the revision. '),
+          ),
+        'reject' => array(
+          'short' => 'r',
+          'help' => pht(
+            'Reject the revision. '),
+          ),
+        'comment' => array(
+          'short' => 'com',
+          'help' => pht(
+            'Add comment to the revision. '),
+          ),
+        'revision' => array(
+          'param' => 'message',
+          'short' => 'rev',
+          'help' => pht(
+            'Revision ID for accept or reject. '),
+          ),
   			'commit-push' => array(
   				'conflicts' => array(
   					'push'    => pht(
@@ -146,6 +167,58 @@ EOTEXT
 
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
+
+      if ($this->getArgument('accept')) {
+        if (!$this->getArgument('revision')) {
+          echo pht("Need revision id for accept. Please provide --revision or -rev \n");
+          exit(1);
+        }
+        $revision = $this->getArgument('revision');
+        $message = $this->getArgument('message');
+        $result = $conduit->callMethodSynchronous(
+          'differential.createcomment',
+          array(
+            'revision_id' =>  $revision,
+            'action' => 'accept',
+            'message' => $message,
+            ));
+        var_dump($result);
+        exit(0);
+      }
+      else if($this->getArgument('reject')){
+        if (!$this->getArgument('revision')) {
+          echo pht("Need revision id to reject. Please provide --revision or -rev \n");
+          exit(1);
+        }
+        $revision = $this->getArgument('revision');
+        $message = $this->getArgument('message');
+        $result = $conduit->callMethodSynchronous(
+          'differential.createcomment',
+          array(
+            'revision_id' =>  $revision,
+            'action' => 'reject',
+            'message' => $message,
+            ));
+        var_dump($result);
+        exit(0);
+      }
+
+      else if($this->getArgument('comment')){
+        if (!$this->getArgument('revision')) {
+          echo pht("Need revision id to comment. Please provide --revision or -rev \n");
+          exit(1);
+        }
+        $revision = $this->getArgument('revision');
+        $message = $this->getArgument('message');
+        $result = $conduit->callMethodSynchronous(
+          'differential.createcomment',
+          array(
+            'revision_id' =>  $revision,
+            'message' => $message,
+            ));
+        var_dump($result);
+        exit(0);
+      }
 
       //$data = $this->runLintUnit();
       //$lint_result = $data['lintResult'];

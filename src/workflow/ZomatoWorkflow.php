@@ -167,6 +167,7 @@ EOTEXT
 
   	public function run() {
   		$this->console = PhutilConsole::getConsole();
+      $conduit = $this->getConduit();
 
       if ($this->getArgument('accept')) {
         if (!$this->getArgument('revision')) {
@@ -234,7 +235,6 @@ EOTEXT
       $origin = $this->getConfigFromAnySource(self::PUSH_ORIGIN_CONFIGKEY) ? $this->getConfigFromAnySource(self::PUSH_ORIGIN_CONFIGKEY) : 'origin';
       $projectId = $this->getArgument('project') ? $this->getArgument('project') : $this->getConfigFromAnySource(self::PROJECT_CONFIGKEY);
   		$repoId = $this->getConfigFromAnySource(self::REPOSITORY_CONFIGKEY);
-  		$conduit = $this->getConduit();
   		$branch = $repository->getBranchName();
   		$repo = $repository->getRemoteURI();
   		$repoURL = null;

@@ -243,28 +243,28 @@ EOTEXT
         'projectId' => $projectId,
         );
 
-      $diff_result = $conduit->callMethodSynchronous(
-          'zomato.getdiff',
-          $diff_params);
-      $diff = $diff_result['diff'];
+      // $diff_result = $conduit->callMethodSynchronous(
+      //     'zomato.getdiff',
+      //     $diff_params);
+      // $diff = $diff_result['diff'];
 
-      //$diff = $repository->getFullGitDiff(
-      //  $repository->getBaseCommit(),
-      //   $repository->getHeadCommit());
+      $diff = $repository->getFullGitDiff(
+       $repository->getBaseCommit(),
+        $repository->getHeadCommit());
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
-      $change_diff = "";
-      foreach ($changes as $change) {
-        $path = $change->getCurrentPath();
-        $change_diff = $change_diff.$repository->getRawDiffText($path, $moves = false);
-      }
+      // $change_diff = "";
+      // foreach ($changes as $change) {
+      //   $path = $change->getCurrentPath();
+      //   $change_diff = $change_diff.$repository->getRawDiffText($path, $moves = false);
+      // }
 
-      $parser = $this->newDiffParser();
-      $changes = $parser->parseDiff($change_diff);
+      // $parser = $this->newDiffParser();
+      // $changes = $parser->parseDiff($change_diff);
 
-      $bundle = ArcanistBundle::newFromDiff($change_diff);
-      $new_diff = $bundle->toGitPatch();
+      // $bundle = ArcanistBundle::newFromDiff($change_diff);
+      // $new_diff = $bundle->toGitPatch();
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

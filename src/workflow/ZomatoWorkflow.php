@@ -271,6 +271,10 @@ EOTEXT
   			exit(1);
   		}
 
+      $base_origin = $this->getConfigFromAnySource('base');
+      var_dump($base_origin);
+      die();
+
   		if ($this->getArgument('add-commit-push')) {
   			$message = $this->getArgument('commit-message');
   			

@@ -327,17 +327,18 @@ EOTEXT
 
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
-      // $change_diff = "";
-      // foreach ($changes as $change) {
-      //   $path = $change->getCurrentPath();
-      //   $change_diff = $change_diff.$repository->getRawDiffText($path, $moves = false);
-      // }
 
-      // $parser = $this->newDiffParser();
-      // $changes = $parser->parseDiff($change_diff);
+      foreach ($changes as $change) {
+        $path = $change->getCurrentPath();
+        $file_type = $change->getFileType();
+        var_dump($path);
+        var_dump($file_type);
+        foreach ($change->getHunks() as $hunk) {
+          var_dump($hunk);
+        }
+      }
 
-      // $bundle = ArcanistBundle::newFromDiff($change_diff);
-      // $new_diff = $bundle->toGitPatch();
+      die();
 
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');

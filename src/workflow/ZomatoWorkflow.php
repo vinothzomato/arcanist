@@ -273,9 +273,15 @@ EOTEXT
 
       $base_origin = $this->getConfigFromAnySource('base');
       $matches = null;
-      if (preg_match('/^merge-base\((.+)\)$/', $base_origin, $matches)) {
+      if (preg_match('/^git:merge-base\((.+)\)/', $base_origin, $matches)) {
+        $bases = explode("/", $matches[1]);
+        var_dump($matches[1]);
+        var_dump($bases[0]);
+        var_dump($bases[1]);
       }
-      var_dump($matches);
+      else{
+
+      }
       die();
 
   		if ($this->getArgument('add-commit-push')) {

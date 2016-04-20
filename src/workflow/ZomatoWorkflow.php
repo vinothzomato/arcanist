@@ -338,18 +338,6 @@ EOTEXT
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
 
-      foreach ($changes as $change) {
-        $path = $change->getCurrentPath();
-        $file_type = $change->getFileType();
-        var_dump($path);
-        var_dump($file_type);
-        foreach ($change->getHunks() as $hunk) {
-          var_dump($hunk);
-        }
-      }
-
-      die();
-
   		if ($this->getArgument('create')) {
   			$title = $this->getArgument('title');
   			if (!strlen($title)) {

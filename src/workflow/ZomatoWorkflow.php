@@ -275,10 +275,10 @@ EOTEXT
       $matches = null;
       if (preg_match('/^git:merge-base\((.+)\)/', $base_origin, $matches)) {
         $bases = explode("/", $matches[1]);
-        $repository->execPassthru('fetch '.$bases[0].' '.$bases[1]);
+        $repository->execPassthru('fetch --quiet '.$bases[0].' '.$bases[1]);
       }
       else{
-        $repository->execPassthru('fetch zomato_origin master');
+        $repository->execPassthru('fetch --quiet zomato_origin master');
       }
 
   		if ($this->getArgument('add-commit-push')) {

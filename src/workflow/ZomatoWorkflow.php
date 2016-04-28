@@ -338,6 +338,11 @@ EOTEXT
        $repository->getBaseCommit(),
         $repository->getHeadCommit());
 
+      if (!strlen($diff)) {
+        echo pht("No changes found. \n");
+        exit(1);
+      }
+
       $parser = $this->newDiffParser();
       $changes = $parser->parseDiff($diff);
 

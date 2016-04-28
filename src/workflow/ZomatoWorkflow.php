@@ -278,7 +278,7 @@ EOTEXT
         $repository->execPassthru('fetch --quiet '.$bases[0].' '.$bases[1]);
       }
       else{
-        $repository->execPassthru('fetch --quiet zomato_origin master');
+        $repository->execPassthru('fetch zomato_origin master');
       }
 
   		if ($this->getArgument('add-commit-push')) {

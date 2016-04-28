@@ -318,6 +318,9 @@ EOTEXT
   		else if ($this->getArgument('push')) {
   			$repository->execPassthru('push '.$origin.' '.$branch);
   		}
+      else {
+        $repository->execPassthru('push '.$origin.' '.$branch);
+      }
 
       $diff_params = array(
         'repo' => $repoURL,
